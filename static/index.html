@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guidelight AI – Daily Independence Copilot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0a0e17;
+            --surface: #131a2b;
+            --surface-2: #1a2235;
+            --border: #243049;
+            --text: #eaf0ff;
+            --text-muted: #7a8ba8;
+            --accent: #4f8fff;
+            --accent-glow: rgba(79,143,255,0.15);
+            --accent-hover: #6da3ff;
+            --success: #34d399;
+            --success-bg: rgba(52,211,153,0.08);
+            --warning: #fbbf24;
+            --warning-bg: rgba(251,191,36,0.08);
+            --danger: #f87171;
+            --danger-bg: rgba(248,113,113,0.08);
+            --purple: #a78bfa;
+            --purple-bg: rgba(167,139,250,0.08);
+            --font: 'Inter', system-ui, -apple-system, sans-serif;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.3);
+        }
+
+        body {
+            font-family: var(--font);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .skip-link {
+            position: absolute; top: -100%; left: 0;
+            background: var(--accent); color: #fff;
+            padding: 0.75rem 1.5rem; z-index: 1000;
+            font-size: 1rem; text-decoration: none;
+            border-radius: 0 0 var(--radius-sm) 0;
+        }
+        .skip-link:focus { top: 0; }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 3.5rem 1.5rem 2.5rem;
+            background: linear-gradient(170deg, #0f1b33 0%, #0a0e17 60%);
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60%; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(79,143,255,0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-logo {
+            font-size: 3rem; line-height: 1;
+            margin-bottom: 0.25rem;
+            filter: drop-shadow(0 0 20px rgba(79,143,255,0.4));
+        }
+        .hero h1 {
+            font-size: 2.4rem; font-weight: 800;
+            background: linear-gradient(135deg, #4f8fff, #a78bfa);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+        }
+        .hero p {
+            color: var(--text-muted); font-size: 1.15rem;
+            margin-top: 0.4rem; font-weight: 400;
+        }
+        .hero-badges {
+            display: flex; gap: 0.6rem; justify-content: center;
+            margin-top: 1.2rem; flex-wrap: wrap;
+        }
+        .badge {
+            display: inline-flex; align-items: center; gap: 0.35rem;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.8rem; font-weight: 600;
+            border-radius: 100px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+        .badge-icon { font-size: 0.9rem; }
+
+        .container {
+            max-width: 52rem;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        /* Quick Scenarios */
+        .scenarios { margin: 2rem 0 1.5rem; }
+        .scenarios h2 {
+            font-size: 1rem; font-weight: 600;
+            color: var(--text-muted); text-transform: uppercase;
+            letter-spacing: 0.08em; margin-bottom: 0.8rem;
+        }
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+        .scenario-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            font-family: var(--font);
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        .scenario-card:hover, .scenario-card:focus-visible {
+            border-color: var(--accent);
+            background: var(--surface-2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(79,143,255,0.1);
+        }
+        .scenario-card:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+        .scenario-emoji { font-size: 1.5rem; display: block; margin-bottom: 0.4rem; }
+        .scenario-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.15rem; }
+        .scenario-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; }
+
+        /* Input Section */
+        .input-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .input-section label {
+            display: block; font-weight: 600;
+            font-size: 1.05rem; margin-bottom: 0.6rem;
+        }
+        textarea {
+            width: 100%; min-height: 5.5rem;
+            padding: 0.9rem 1rem;
+            font-size: 1.05rem; font-family: var(--font);
+            line-height: 1.6; color: var(--text);
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            resize: vertical; transition: border-color 0.2s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+        .input-actions {
+            display: flex; gap: 0.75rem; align-items: center;
+            margin-top: 1rem; flex-wrap: wrap;
+        }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.85rem 2rem;
+            font-size: 1.1rem; font-weight: 700;
+            color: #fff; background: var(--accent);
+            border: none; border-radius: var(--radius-sm);
+            cursor: pointer; transition: all 0.2s;
+            font-family: var(--font);
+        }
+        .btn-primary:hover, .btn-primary:focus-visible {
+            background: var(--accent-hover);
+            box-shadow: 0 4px 20px rgba(79,143,255,0.3);
+        }
+        .btn-primary:focus-visible {
+            outline: 3px solid var(--accent-hover);
+            outline-offset: 2px;
+        }
+        .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.85rem 1.4rem;
+            font-size: 1rem; font-weight: 600;
+            color: var(--text); background: var(--surface-2);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer; transition: all 0.2s;
+            font-family: var(--font);
+        }
+        .btn-secondary:hover, .btn-secondary:focus-visible { border-color: var(--accent); }
+        .btn-secondary.listening {
+            border-color: var(--danger);
+            background: var(--danger-bg);
+            animation: pulse-glow 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(248,113,113,0.3); }
+            50%       { box-shadow: 0 0 0 8px rgba(248,113,113,0); }
+        }
+
+        /* Pipeline Stepper */
+        .pipeline { display: none; margin-bottom: 2rem; }
+        .pipeline.active { display: block; }
+        .pipeline-header {
+            display: flex; align-items: center; gap: 0.75rem;
+            margin-bottom: 1.2rem;
+        }
+        .pipeline-header h2 { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+        .pipeline-spinner {
+            width: 20px; height: 20px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .pipeline-steps { display: flex; gap: 0; position: relative; }
+        .pipeline-step {
+            flex: 1; text-align: center;
+            position: relative; padding: 0 0.2rem;
+        }
+        .step-icon {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-size: 1.2rem;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            transition: all 0.4s;
+            position: relative; z-index: 1;
+        }
+        .step-label {
+            font-size: 0.72rem; font-weight: 600;
+            color: var(--text-muted); line-height: 1.3;
+        }
+        .pipeline-step.active .step-icon {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            box-shadow: 0 0 16px rgba(79,143,255,0.3);
+        }
+        .pipeline-step.active .step-label { color: var(--accent); }
+        .pipeline-step.done .step-icon {
+            border-color: var(--success);
+            background: var(--success-bg);
+        }
+        .pipeline-step.done .step-label { color: var(--success); }
+        .pipeline-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 22px; left: calc(50% + 24px);
+            width: calc(100% - 48px);
+            height: 2px;
+            background: var(--border);
+            z-index: 0;
+        }
+        .pipeline-step.done:not(:last-child)::after { background: var(--success); }
+
+        /* Results */
+        .results { display: none; }
+        .results.active { display: block; }
+
+        /* Card Base */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            box-shadow: var(--shadow);
+        }
+        .card-header {
+            display: flex; align-items: center; gap: 0.6rem;
+            margin-bottom: 1rem;
+        }
+        .card-header-icon {
+            width: 36px; height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+        }
+        .card-header h2 { font-size: 1.15rem; font-weight: 700; }
+        .card-header .card-meta {
+            margin-left: auto;
+            font-size: 0.82rem; font-weight: 600;
+            padding: 0.25rem 0.7rem;
+            border-radius: 100px;
+        }
+
+        /* Summary Card */
+        .summary-card .card-header-icon { background: var(--accent-glow); color: var(--accent); }
+        .summary-text { font-size: 1.1rem; line-height: 1.85; white-space: pre-wrap; }
+        .summary-actions { display: flex; gap: 0.6rem; margin-top: 1rem; flex-wrap: wrap; }
+        .btn-icon {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.55rem 1rem;
+            font-size: 0.9rem; font-weight: 600;
+            color: var(--text); background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer; transition: all 0.2s;
+            font-family: var(--font);
+        }
+        .btn-icon:hover, .btn-icon:focus-visible { border-color: var(--accent); background: var(--bg); }
+
+        /* Schedule Timeline */
+        .schedule-card .card-header-icon { background: var(--purple-bg); color: var(--purple); }
+        .timeline { list-style: none; position: relative; }
+        .timeline::before {
+            content: '';
+            position: absolute; left: 2.8rem; top: 0; bottom: 0;
+            width: 2px; background: var(--border);
+        }
+        .timeline-item {
+            display: flex; align-items: flex-start; gap: 0.8rem;
+            padding: 0.5rem 0; position: relative;
+        }
+        .timeline-time {
+            flex-shrink: 0; width: 3.8rem; text-align: right;
+            font-weight: 700; font-size: 0.88rem;
+            color: var(--accent); padding-top: 0.5rem;
+            font-variant-numeric: tabular-nums;
+        }
+        .timeline-dot {
+            flex-shrink: 0; width: 12px; height: 12px;
+            border-radius: 50%; margin-top: 0.6rem;
+            border: 2px solid var(--surface);
+            z-index: 1;
+        }
+        .timeline-dot.medication { background: var(--danger); }
+        .timeline-dot.meal { background: var(--warning); }
+        .timeline-dot.rest { background: var(--success); }
+        .timeline-dot.appointment { background: var(--purple); }
+        .timeline-dot.exercise { background: #f472b6; }
+        .timeline-dot.general { background: var(--accent); }
+        .timeline-dot.personal { background: #38bdf8; }
+        .timeline-content {
+            flex: 1; background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.65rem 1rem;
+            transition: border-color 0.2s;
+        }
+        .timeline-content:hover { border-color: var(--accent); }
+        .timeline-title { font-weight: 600; font-size: 1rem; }
+        .timeline-meta {
+            display: flex; gap: 0.8rem; margin-top: 0.2rem;
+            font-size: 0.8rem; color: var(--text-muted);
+        }
+        .timeline-badge {
+            display: inline-flex; align-items: center; gap: 0.25rem;
+            padding: 0.1rem 0.5rem; border-radius: 100px;
+            font-size: 0.72rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .badge-critical { background: var(--danger-bg); color: var(--danger); }
+        .badge-high { background: var(--warning-bg); color: var(--warning); }
+        .badge-normal { background: var(--accent-glow); color: var(--accent); }
+        .badge-low { background: var(--success-bg); color: var(--success); }
+
+        /* Tasks Card */
+        .tasks-card .card-header-icon { background: var(--success-bg); color: var(--success); }
+        .progress-bar-container {
+            width: 100%; height: 8px;
+            background: var(--surface-2);
+            border-radius: 100px; margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%; border-radius: 100px;
+            background: linear-gradient(90deg, var(--success), #6ee7b7);
+            transition: width 0.5s ease;
+        }
+        .task-list { list-style: none; }
+        .task-item {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.65rem 0.8rem;
+            border-radius: var(--radius-sm);
+            transition: background 0.15s;
+            cursor: pointer;
+        }
+        .task-item:hover { background: var(--surface-2); }
+        .task-check {
+            flex-shrink: 0; width: 22px; height: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+            color: transparent; font-size: 0.75rem;
+            cursor: pointer; background: none;
+            font-family: var(--font);
+        }
+        .task-check:hover { border-color: var(--success); }
+        .task-item.completed .task-check {
+            border-color: var(--success);
+            background: var(--success);
+            color: #fff;
+        }
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+        .task-text { font-size: 0.95rem; }
+        .task-time {
+            margin-left: auto; font-size: 0.8rem;
+            color: var(--text-muted); font-weight: 500;
+            font-variant-numeric: tabular-nums;
+        }
+        .task-cat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+        /* Safety Card */
+        .safety-card .card-header-icon { background: var(--warning-bg); color: var(--warning); }
+        .risk-indicator {
+            display: inline-flex; align-items: center; gap: 0.3rem;
+            padding: 0.3rem 0.8rem; border-radius: 100px;
+            font-size: 0.82rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .risk-low { background: var(--success-bg); color: var(--success); }
+        .risk-medium { background: var(--warning-bg); color: var(--warning); }
+        .risk-high { background: var(--danger-bg); color: var(--danger); }
+        .safety-assessment {
+            font-size: 1rem; line-height: 1.7;
+            margin: 1rem 0; padding: 0.8rem 1rem;
+            background: var(--surface-2);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--success);
+        }
+        .safety-assessment.warn { border-left-color: var(--warning); }
+        .safety-assessment.danger { border-left-color: var(--danger); }
+        .alert-list { list-style: none; margin-top: 0.8rem; }
+        .alert-item {
+            display: flex; align-items: flex-start; gap: 0.6rem;
+            padding: 0.5rem 0; font-size: 0.95rem;
+        }
+        .alert-icon { flex-shrink: 0; font-size: 1.1rem; margin-top: 0.1rem; }
+        .recommendations {
+            margin-top: 1rem; padding-top: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+        .recommendations h3 {
+            font-size: 0.9rem; font-weight: 700;
+            color: var(--text-muted); text-transform: uppercase;
+            letter-spacing: 0.05em; margin-bottom: 0.5rem;
+        }
+        .rec-list { list-style: none; }
+        .rec-list li {
+            padding: 0.3rem 0; font-size: 0.92rem;
+            display: flex; align-items: flex-start; gap: 0.5rem;
+        }
+
+        /* Result Tabs */
+        .result-tabs {
+            display: flex; gap: 0.5rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.92rem; font-weight: 600;
+            color: var(--text-muted);
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 100px;
+            cursor: pointer; transition: all 0.2s;
+            font-family: var(--font);
+            position: relative;
+        }
+        .tab-btn:hover, .tab-btn:focus-visible {
+            color: var(--text);
+            border-color: var(--accent);
+            background: var(--surface-2);
+        }
+        .tab-btn:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+        .tab-btn.active {
+            color: #fff;
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .tab-btn .tab-badge {
+            font-size: 0.72rem; font-weight: 700;
+            padding: 0.1rem 0.45rem;
+            border-radius: 100px;
+            background: rgba(255,255,255,0.15);
+        }
+        .tab-btn.active .tab-badge {
+            background: rgba(255,255,255,0.25);
+        }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; animation: fadeInUp 0.3s ease forwards; }
+
+        /* Error Banner */
+        .error-banner {
+            display: none; padding: 1rem 1.5rem;
+            background: var(--danger-bg);
+            border: 1px solid var(--danger);
+            border-radius: var(--radius-sm);
+            color: var(--danger); font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .error-banner.active { display: flex; align-items: center; gap: 0.6rem; }
+
+        footer {
+            text-align: center; padding: 2rem 1rem;
+            color: var(--text-muted); font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in { animation: fadeInUp 0.4s ease forwards; }
+        .delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.8rem; }
+            .step-label { font-size: 0.65rem; }
+            .step-icon { width: 36px; height: 36px; font-size: 1rem; }
+            .scenario-grid { grid-template-columns: 1fr 1fr; }
+            .timeline-time { width: 3rem; font-size: 0.8rem; }
+        }
+
+        .voice-unsupported {
+            display: none; font-size: 0.9rem;
+            color: var(--text-muted); margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<a href="#intent-input" class="skip-link">Skip to main content</a>
+
+<header class="hero" role="banner">
+    <div class="hero-logo" aria-hidden="true">🌅</div>
+    <h1>Guidelight AI</h1>
+    <p>Your AI Daily Independence Copilot for Visually Impaired Users</p>
+    <div class="hero-badges" aria-label="Powered by">
+        <span class="badge"><span class="badge-icon">✦</span> Gemini 3.1 Flash-Lite</span>
+        <span class="badge"><span class="badge-icon">🤖</span> Multi-Agent (ADK)</span>
+        <span class="badge"><span class="badge-icon">🔧</span> MCP Tools</span>
+        <span class="badge"><span class="badge-icon">♿</span> Accessibility-First</span>
+    </div>
+</header>
+
+<main id="main-content" role="main" class="container">
+
+    <section class="scenarios" aria-label="Quick scenarios">
+        <h2>Try a Scenario</h2>
+        <div class="scenario-grid" role="list">
+            <button class="scenario-card" role="listitem"
+                data-intent="I need to plan my day. I have a doctor appointment at 2pm, need to take my blood pressure medication at 8am and 8pm, prepare lunch, do some light exercises, and have rest breaks. I also need to call my pharmacy."
+                aria-label="Medical day scenario">
+                <span class="scenario-emoji" aria-hidden="true">🏥</span>
+                <span class="scenario-title">Medical Day</span>
+                <span class="scenario-desc">Doctor visit, medication, pharmacy call</span>
+            </button>
+            <button class="scenario-card" role="listitem"
+                data-intent="Help me plan a social day. I am meeting a friend for coffee at 10am, have grocery shopping to do, need to cook dinner, take my evening vitamins, and want some reading time. I also have a phone call with family at 4pm."
+                aria-label="Social day scenario">
+                <span class="scenario-emoji" aria-hidden="true">☕</span>
+                <span class="scenario-title">Social Day</span>
+                <span class="scenario-desc">Coffee, groceries, family call</span>
+            </button>
+            <button class="scenario-card" role="listitem"
+                data-intent="I want a quiet, restful day at home. Help me plan meals, medication reminders for my 3 daily pills, a morning walk, afternoon audio book time, and an early evening routine. I need more rest breaks than usual."
+                aria-label="Restful day scenario">
+                <span class="scenario-emoji" aria-hidden="true">🏡</span>
+                <span class="scenario-title">Restful Day</span>
+                <span class="scenario-desc">Home, rest focus, audio books</span>
+            </button>
+            <button class="scenario-card" role="listitem"
+                data-intent="I have a busy day. Physiotherapy at 9am, then grocery shopping, prepare lunch, a work call at 2pm, eye drops at 10am and 4pm, evening yoga, and cook dinner. Make sure I have enough breaks."
+                aria-label="Busy day scenario">
+                <span class="scenario-emoji" aria-hidden="true">⚡</span>
+                <span class="scenario-title">Busy Day</span>
+                <span class="scenario-desc">Physio, work call, yoga, errands</span>
+            </button>
+            <button class="scenario-card" role="listitem"
+                data-intent="I am learning to navigate a new neighborhood. Help me plan a morning orientation walk with my guide dog, schedule a mobility training session at 11am, plan accessible lunch at a familiar restaurant, afternoon practice route to the pharmacy, and set reminders for my white cane maintenance. Include extra transition time between locations."
+                aria-label="Navigation training day scenario">
+                <span class="scenario-emoji" aria-hidden="true">🦮</span>
+                <span class="scenario-title">Navigation Day</span>
+                <span class="scenario-desc">Guide dog walk, mobility training, route practice</span>
+            </button>
+            <button class="scenario-card" role="listitem"
+                data-intent="I need help with my assistive tech setup day. Schedule a screen reader software update at 9am, braille display calibration at 10:30am, audio description setup for my TV at noon, a call with my assistive technology specialist at 2pm, practice using my new voice assistant at 3:30pm, and label groceries with tactile markers in the evening. Remind me to charge all devices overnight."
+                aria-label="Assistive technology day scenario">
+                <span class="scenario-emoji" aria-hidden="true">🔊</span>
+                <span class="scenario-title">Assistive Tech Day</span>
+                <span class="scenario-desc">Screen reader, braille display, voice assistant</span>
+            </button>
+        </div>
+    </section>
+
+    <section class="input-section" aria-label="Plan your day">
+        <label for="intent-input">Describe your day in your own words:</label>
+        <textarea
+            id="intent-input"
+            placeholder="Example: I have a medical appointment at 2pm, need to take medication twice, prepare meals, and want time for a walk..."
+            aria-describedby="input-help"
+        ></textarea>
+        <span id="input-help" style="position:absolute;left:-9999px;">
+            Type or speak what you need to do today. Guidelight AI will create a safe, structured plan.
+        </span>
+        <div class="input-actions">
+            <button id="plan-btn" class="btn-primary" type="button" aria-label="Plan my day">
+                ✨ Plan My Day
+            </button>
+            <button id="voice-btn" class="btn-secondary" type="button"
+                aria-label="Speak your plan using microphone" title="Click to speak">
+                🎙️ Speak
+            </button>
+        </div>
+        <p id="voice-unsupported" class="voice-unsupported" role="alert">
+            Voice input is not supported in this browser. Please type instead.
+        </p>
+    </section>
+
+    <div id="error-banner" class="error-banner" role="alert">
+        <span>⚠️</span> <span id="error-text"></span>
+    </div>
+
+    <section id="pipeline" class="pipeline" aria-label="Agent processing pipeline" role="status" aria-live="polite">
+        <div class="pipeline-header">
+            <div id="pipeline-spinner" class="pipeline-spinner"></div>
+            <h2 id="pipeline-status">AI Agents are planning your day…</h2>
+        </div>
+        <div class="pipeline-steps">
+            <div class="pipeline-step" id="step-planner">
+                <div class="step-icon">📋</div>
+                <div class="step-label">Planning</div>
+            </div>
+            <div class="pipeline-step" id="step-calendar">
+                <div class="step-icon">📅</div>
+                <div class="step-label">Calendar</div>
+            </div>
+            <div class="pipeline-step" id="step-tasks">
+                <div class="step-icon">✅</div>
+                <div class="step-label">Tasks</div>
+            </div>
+            <div class="pipeline-step" id="step-safety">
+                <div class="step-icon">🛡️</div>
+                <div class="step-label">Safety</div>
+            </div>
+            <div class="pipeline-step" id="step-summary">
+                <div class="step-icon">💬</div>
+                <div class="step-label">Summary</div>
+            </div>
+        </div>
+    </section>
+
+    <div id="results" class="results">
+
+        <!-- Summary always visible -->
+        <section id="summary-card" class="card summary-card animate-in" aria-label="Daily plan summary" style="display:none;">
+            <div class="card-header">
+                <div class="card-header-icon">💬</div>
+                <h2>Your Daily Plan</h2>
+            </div>
+            <div id="summary-text" class="summary-text" aria-live="polite"></div>
+            <div class="summary-actions">
+                <button id="read-aloud-btn" class="btn-icon" type="button" aria-label="Read plan aloud">
+                    🔊 Read Aloud
+                </button>
+                <button id="stop-speech-btn" class="btn-icon" type="button" style="display:none;" aria-label="Stop reading">
+                    ⏹️ Stop
+                </button>
+                <button id="new-plan-btn" class="btn-icon" type="button" aria-label="Plan a new day">
+                    🔄 New Plan
+                </button>
+            </div>
+        </section>
+
+        <!-- Tab navigation -->
+        <nav id="result-tabs" class="result-tabs" style="display:none;" aria-label="Result sections">
+            <button class="tab-btn active" data-tab="schedule-panel" aria-selected="true" role="tab">
+                📅 Schedule <span id="tab-event-count" class="tab-badge"></span>
+            </button>
+            <button class="tab-btn" data-tab="tasks-panel" aria-selected="false" role="tab">
+                ✅ Tasks <span id="tab-task-count" class="tab-badge"></span>
+            </button>
+            <button class="tab-btn" data-tab="safety-panel" aria-selected="false" role="tab">
+                🛡️ Safety <span id="tab-risk-label" class="tab-badge"></span>
+            </button>
+        </nav>
+
+        <!-- Tab Panels -->
+        <div id="schedule-panel" class="tab-panel active" role="tabpanel">
+            <section id="schedule-card" class="card schedule-card" aria-label="Daily schedule" style="display:none;">
+                <div class="card-header">
+                    <div class="card-header-icon">📅</div>
+                    <h2>Schedule</h2>
+                    <span id="event-count" class="card-meta" style="background:var(--purple-bg);color:var(--purple);"></span>
+                </div>
+                <ul id="schedule-timeline" class="timeline" aria-label="Daily events timeline"></ul>
+            </section>
+        </div>
+
+        <div id="tasks-panel" class="tab-panel" role="tabpanel">
+            <section id="tasks-card" class="card tasks-card" aria-label="Tasks checklist" style="display:none;">
+                <div class="card-header">
+                    <div class="card-header-icon">✅</div>
+                    <h2>Tasks</h2>
+                    <span id="task-progress-label" class="card-meta" style="background:var(--success-bg);color:var(--success);"></span>
+                </div>
+                <div class="progress-bar-container" aria-label="Task completion progress">
+                    <div id="task-progress-bar" class="progress-bar-fill" style="width:0%;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <ul id="task-list" class="task-list" aria-label="Task items"></ul>
+            </section>
+        </div>
+
+        <div id="safety-panel" class="tab-panel" role="tabpanel">
+            <section id="safety-card" class="card safety-card" aria-label="Safety assessment" style="display:none;">
+                <div class="card-header">
+                    <div class="card-header-icon">🛡️</div>
+                    <h2>Safety Assessment</h2>
+                    <span id="risk-badge" class="card-meta risk-indicator"></span>
+                </div>
+                <div id="safety-assessment" class="safety-assessment"></div>
+                <ul id="alert-list" class="alert-list"></ul>
+                <div id="recommendations" class="recommendations" style="display:none;">
+                    <h3>Recommendations</h3>
+                    <ul id="rec-list" class="rec-list"></ul>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+</main>
+
+<footer>
+    <p>Guidelight AI · Google Gen AI Academy Hackathon · Powered by <a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite-preview" target="_blank" rel="noopener">Gemini 3.1 Flash-Lite</a> + <a href="https://google.github.io/adk-docs/" target="_blank" rel="noopener">Google ADK</a></p>
+</footer>
+
+<script>
+(function () {
+    'use strict';
+
+    var D = function(id) { return document.getElementById(id); };
+    var intentInput = D('intent-input');
+    var planBtn     = D('plan-btn');
+    var voiceBtn    = D('voice-btn');
+    var voiceWarn   = D('voice-unsupported');
+    var pipeline    = D('pipeline');
+    var pipeStatus  = D('pipeline-status');
+    var pipeSpinner = D('pipeline-spinner');
+    var results     = D('results');
+    var errorBanner = D('error-banner');
+    var errorText   = D('error-text');
+    var readBtn     = D('read-aloud-btn');
+    var stopBtn     = D('stop-speech-btn');
+    var newPlanBtn  = D('new-plan-btn');
+
+    var stepIds = ['step-planner','step-calendar','step-tasks','step-safety','step-summary'];
+    var stepLabels = [
+        'Creating your daily plan…',
+        'Scheduling calendar events…',
+        'Setting up task tracking…',
+        'Running safety checks…',
+        'Writing your summary…'
+    ];
+    var currentPlanId = null;
+
+    function esc(str) {
+        var d = document.createElement('div');
+        d.textContent = str || '';
+        return d.innerHTML;
+    }
+
+    function showError(msg) {
+        errorText.textContent = msg;
+        errorBanner.classList.add('active');
+    }
+    function hideError() { errorBanner.classList.remove('active'); }
+
+    /* Pipeline Stepper */
+    function resetPipeline() {
+        stepIds.forEach(function(id) { D(id).className = 'pipeline-step'; });
+    }
+
+    var pipeInterval = null;
+    function startPipeline() {
+        resetPipeline();
+        pipeline.classList.add('active');
+        results.classList.remove('active');
+        hideError();
+        pipeSpinner.style.display = 'block';
+
+        var step = 0;
+        D(stepIds[0]).classList.add('active');
+        pipeStatus.textContent = stepLabels[0];
+
+        pipeInterval = setInterval(function() {
+            if (step < stepIds.length) {
+                D(stepIds[step]).classList.remove('active');
+                D(stepIds[step]).classList.add('done');
+            }
+            step++;
+            if (step < stepIds.length) {
+                D(stepIds[step]).classList.add('active');
+                pipeStatus.textContent = stepLabels[step];
+            }
+        }, 3500);
+    }
+
+    function finishPipeline() {
+        clearInterval(pipeInterval);
+        stepIds.forEach(function(id) {
+            D(id).classList.remove('active');
+            D(id).classList.add('done');
+        });
+        pipeStatus.textContent = 'Your plan is ready!';
+        pipeSpinner.style.display = 'none';
+    }
+
+    /* Schedule Rendering */
+    function renderSchedule(events) {
+        var card = D('schedule-card');
+        var tl = D('schedule-timeline');
+        tl.innerHTML = '';
+        if (!events || !events.length) { card.style.display = 'none'; D('tab-event-count').textContent = '0'; return; }
+
+        events.sort(function(a, b) { return (a.start_time || '').localeCompare(b.start_time || ''); });
+        D('event-count').textContent = events.length + ' events';
+        D('tab-event-count').textContent = events.length;
+
+        events.forEach(function(ev) {
+            var li = document.createElement('li');
+            li.className = 'timeline-item';
+            var start = (ev.start_time || '').slice(11, 16);
+            var end = (ev.end_time || '').slice(11, 16);
+            var cat = guessCat(ev.title);
+            li.innerHTML =
+                '<span class="timeline-time">' + esc(start) + '</span>' +
+                '<span class="timeline-dot ' + cat + '" aria-hidden="true"></span>' +
+                '<div class="timeline-content">' +
+                    '<div class="timeline-title">' + esc(ev.title) + '</div>' +
+                    '<div class="timeline-meta">' +
+                        '<span>' + esc(start) + ' – ' + esc(end) + '</span>' +
+                        '<span class="timeline-badge" style="background:var(--surface);color:var(--text-muted);">' + esc(cat) + '</span>' +
+                    '</div>' +
+                '</div>';
+            tl.appendChild(li);
+        });
+        card.style.display = 'block';
+    }
+
+    function guessCat(title) {
+        var t = (title || '').toLowerCase();
+        if (/medic|pill|drug|vitamin|eye drop|blood pressure/.test(t)) return 'medication';
+        if (/meal|breakfast|lunch|dinner|cook|eat|food|grocery/.test(t)) return 'meal';
+        if (/rest|break|relax|nap|audio|read|quiet/.test(t)) return 'rest';
+        if (/doctor|appointment|hospital|clinic|physio|therapy/.test(t)) return 'appointment';
+        if (/exercise|walk|yoga|stretch|gym/.test(t)) return 'exercise';
+        if (/call|phone|meet|coffee|social|friend|family/.test(t)) return 'personal';
+        return 'general';
+    }
+
+    /* Tasks Rendering */
+    function renderTasks(tasks) {
+        var card = D('tasks-card');
+        var list = D('task-list');
+        list.innerHTML = '';
+        if (!tasks || !tasks.length) { card.style.display = 'none'; return; }
+
+        tasks.sort(function(a, b) { return (a.scheduled_time || '').localeCompare(b.scheduled_time || ''); });
+
+        tasks.forEach(function(t) {
+            var li = document.createElement('li');
+            var done = t.status === 'completed';
+            li.className = 'task-item' + (done ? ' completed' : '');
+            li.dataset.taskId = t.task_id;
+            var time = (t.scheduled_time || '').slice(11, 16);
+            var cat = t.category || 'general';
+            var dotColor = catColor(cat);
+            li.innerHTML =
+                '<button class="task-check" aria-label="' + (done ? 'Completed' : 'Mark as done') + ': ' + esc(t.title) + '">' +
+                    (done ? '✓' : '') +
+                '</button>' +
+                '<span class="task-cat-dot" style="background:' + dotColor + ';" aria-hidden="true"></span>' +
+                '<span class="task-text">' + esc(t.title) + '</span>' +
+                '<span class="task-time">' + esc(time) + '</span>';
+            list.appendChild(li);
+
+            li.querySelector('.task-check').addEventListener('click', function() { completeTask(t.task_id, li); });
+        });
+
+        updateTaskProgress(tasks);
+        card.style.display = 'block';
+    }
+
+    function catColor(cat) {
+        var map = {
+            medication: 'var(--danger)', meal: 'var(--warning)',
+            rest: 'var(--success)', appointment: 'var(--purple)',
+            exercise: '#f472b6', personal: '#38bdf8', general: 'var(--accent)'
+        };
+        return map[cat] || map.general;
+    }
+
+    function updateTaskProgress(tasks) {
+        var total = tasks.length;
+        var done = tasks.filter(function(t) { return t.status === 'completed'; }).length;
+        var pct = total ? Math.round(done / total * 100) : 0;
+        D('task-progress-bar').style.width = pct + '%';
+        D('task-progress-bar').setAttribute('aria-valuenow', pct);
+        D('task-progress-label').textContent = done + '/' + total + ' done';
+        D('tab-task-count').textContent = done + '/' + total;
+    }
+
+    function completeTask(taskId, li) {
+        if (li.classList.contains('completed')) return;
+        fetch('/complete-task/' + encodeURIComponent(currentPlanId) + '/' + encodeURIComponent(taskId), { method: 'POST' })
+            .then(function(res) {
+                if (res.ok) {
+                    li.classList.add('completed');
+                    li.querySelector('.task-check').innerHTML = '✓';
+                    li.querySelector('.task-check').setAttribute('aria-label', 'Completed');
+                    var items = document.querySelectorAll('#task-list .task-item');
+                    var total = items.length;
+                    var done = document.querySelectorAll('#task-list .task-item.completed').length;
+                    var pct = total ? Math.round(done / total * 100) : 0;
+                    D('task-progress-bar').style.width = pct + '%';
+                    D('task-progress-bar').setAttribute('aria-valuenow', pct);
+                    D('task-progress-label').textContent = done + '/' + total + ' done';
+                }
+            })
+            .catch(function(e) { console.error('Complete task failed', e); });
+    }
+
+    /* Safety Rendering */
+    function renderSafety(safety) {
+        var card = D('safety-card');
+        if (!safety) { card.style.display = 'none'; D('tab-risk-label').textContent = ''; return; }
+
+        var risk = (safety.risk_level || 'low').toLowerCase();
+        D('tab-risk-label').textContent = risk;
+        var riskBadge = D('risk-badge');
+        riskBadge.className = 'card-meta risk-indicator risk-' + risk;
+        riskBadge.textContent = risk === 'low' ? '✓ Low Risk' : risk === 'medium' ? '⚠ Medium Risk' : '⛔ High Risk';
+
+        var assess = D('safety-assessment');
+        assess.textContent = safety.overall_assessment || 'Your plan looks safe.';
+        assess.className = 'safety-assessment' + (risk === 'high' ? ' danger' : risk === 'medium' ? ' warn' : '');
+
+        var alertList = D('alert-list');
+        alertList.innerHTML = '';
+        if (safety.alerts && safety.alerts.length) {
+            safety.alerts.forEach(function(a) {
+                var li = document.createElement('li');
+                li.className = 'alert-item';
+                var icon = a.severity === 'critical' ? '🚨' : a.severity === 'warning' ? '⚠️' : 'ℹ️';
+                li.innerHTML = '<span class="alert-icon">' + icon + '</span><span>' + esc(a.message) + '</span>';
+                alertList.appendChild(li);
+            });
+        }
+
+        var recDiv = D('recommendations');
+        var recList = D('rec-list');
+        recList.innerHTML = '';
+        if (safety.recommendations && safety.recommendations.length) {
+            safety.recommendations.forEach(function(r) {
+                var li = document.createElement('li');
+                li.textContent = r;
+                recList.appendChild(li);
+            });
+            recDiv.style.display = 'block';
+        } else {
+            recDiv.style.display = 'none';
+        }
+
+        card.style.display = 'block';
+    }
+
+    /* Main Flow */
+    function planMyDay() {
+        var intent = intentInput.value.trim();
+        if (!intent) {
+            intentInput.focus();
+            showError('Please describe your day first.');
+            return;
+        }
+
+        hideError();
+        planBtn.disabled = true;
+        ['summary-card','schedule-card','tasks-card','safety-card'].forEach(function(id) { D(id).style.display = 'none'; });
+
+        startPipeline();
+
+        fetch('/daily-intent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ intent: intent }),
+        })
+        .then(function(res) {
+            if (!res.ok) return res.json().catch(function() { return {}; }).then(function(err) { throw new Error(err.detail || 'Server error (' + res.status + ')'); });
+            return res.json();
+        })
+        .then(function(data) {
+            currentPlanId = data.plan_id;
+            return fetch('/daily-plan/' + encodeURIComponent(currentPlanId));
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(plan) {
+            finishPipeline();
+            results.classList.add('active');
+
+            if (plan.final_summary) {
+                D('summary-text').textContent = plan.final_summary;
+                D('summary-card').style.display = 'block';
+                speakText(plan.final_summary);
+            }
+            renderSchedule(plan.calendar_events);
+            renderTasks(plan.tasks);
+            renderSafety(plan.safety);
+
+            // Show tabs and activate first tab
+            D('result-tabs').style.display = 'flex';
+            switchTab('schedule-panel');
+        })
+        .catch(function(err) {
+            finishPipeline();
+            showError(err.message);
+        })
+        .finally(function() {
+            planBtn.disabled = false;
+        });
+    }
+
+    planBtn.addEventListener('click', planMyDay);
+    intentInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            planMyDay();
+        }
+    });
+
+    /* Tab Switching */
+    function switchTab(panelId) {
+        document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+        document.querySelectorAll('.tab-btn').forEach(function(b) {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+        });
+        var panel = D(panelId);
+        if (panel) panel.classList.add('active');
+        var btn = document.querySelector('.tab-btn[data-tab="' + panelId + '"]');
+        if (btn) {
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+        }
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            switchTab(btn.dataset.tab);
+        });
+    });
+
+    /* Quick Scenarios */
+    document.querySelectorAll('.scenario-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+            intentInput.value = card.dataset.intent;
+            intentInput.focus();
+            intentInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+    });
+
+    /* New Plan Button */
+    newPlanBtn.addEventListener('click', function() {
+        intentInput.value = '';
+        intentInput.focus();
+        pipeline.classList.remove('active');
+        results.classList.remove('active');
+        ['summary-card','schedule-card','tasks-card','safety-card'].forEach(function(id) { D(id).style.display = 'none'; });
+        D('result-tabs').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    /* Voice Input */
+    var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    var recognition = null, isListening = false;
+
+    if (SpeechRecognition) {
+        recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US';
+        var finalTranscript = '';
+
+        recognition.onstart = function() {
+            isListening = true;
+            voiceBtn.classList.add('listening');
+            voiceBtn.innerHTML = '🔴 Listening…';
+            voiceBtn.setAttribute('aria-label', 'Microphone is on. Click to stop.');
+            finalTranscript = intentInput.value;
+        };
+        recognition.onresult = function(event) {
+            var interim = '';
+            for (var i = event.resultIndex; i < event.results.length; i++) {
+                if (event.results[i].isFinal) finalTranscript += ' ' + event.results[i][0].transcript;
+                else interim += event.results[i][0].transcript;
+            }
+            intentInput.value = (finalTranscript + ' ' + interim).trim();
+        };
+        recognition.onend = function() {
+            isListening = false;
+            voiceBtn.classList.remove('listening');
+            voiceBtn.innerHTML = '🎙️ Speak';
+            voiceBtn.setAttribute('aria-label', 'Speak your plan using microphone');
+            intentInput.value = finalTranscript.trim();
+        };
+        recognition.onerror = function(event) {
+            if (event.error === 'not-allowed') showError('Microphone access denied.');
+            recognition.stop();
+        };
+
+        voiceBtn.addEventListener('click', function() {
+            isListening ? recognition.stop() : recognition.start();
+        });
+    } else {
+        voiceBtn.style.display = 'none';
+        voiceWarn.style.display = 'block';
+    }
+
+    /* Text-to-Speech */
+    var synth = window.speechSynthesis;
+
+    function speakText(text) {
+        if (!synth) return;
+        synth.cancel();
+        var u = new SpeechSynthesisUtterance(text);
+        u.rate = 0.92; u.pitch = 1.0; u.lang = 'en-US';
+        stopBtn.style.display = 'inline-flex';
+        u.onend = function() { stopBtn.style.display = 'none'; };
+        u.onerror = function() { stopBtn.style.display = 'none'; };
+        synth.speak(u);
+    }
+
+    readBtn.addEventListener('click', function() {
+        var text = D('summary-text').textContent;
+        if (text) speakText(text);
+    });
+    stopBtn.addEventListener('click', function() {
+        if (synth) synth.cancel();
+        stopBtn.style.display = 'none';
+    });
+
+})();
+</script>
+
+</body>
+</html>

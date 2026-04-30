@@ -33,7 +33,8 @@ gcloud run deploy "${SERVICE_NAME}" \
     --memory 1Gi \
     --cpu 1 \
     --timeout 300 \
-    --set-env-vars "GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${REGION},GEMINI_MODEL=gemini-3.1-flash-lite-preview,GOOGLE_API_KEY=${GOOGLE_API_KEY:-}" \
+    --set-env-vars "GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${REGION},GEMINI_MODEL=gemini-2.5-flash,GOOGLE_GENAI_USE_VERTEXAI=TRUE" \
+    --set-secrets "/secrets/gcal-token/token.json=gcal-token:latest,/secrets/gcal-creds/credentials.json=gcal-credentials:latest" \
     --min-instances 0 \
     --max-instances 3
 

@@ -57,7 +57,7 @@
         .hero {
             position: relative;
             text-align: center;
-            padding: 3.5rem 1.5rem 2.5rem;
+            padding: 3rem 1.5rem 2rem;
             background: linear-gradient(170deg, #0f1b33 0%, #0a0e17 60%);
             overflow: hidden;
         }
@@ -137,10 +137,7 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(79,143,255,0.1);
         }
-        .scenario-card:focus-visible {
-            outline: 3px solid var(--accent);
-            outline-offset: 2px;
-        }
+        .scenario-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
         .scenario-emoji { font-size: 1.5rem; display: block; margin-bottom: 0.4rem; }
         .scenario-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.15rem; }
         .scenario-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; }
@@ -189,10 +186,7 @@
             background: var(--accent-hover);
             box-shadow: 0 4px 20px rgba(79,143,255,0.3);
         }
-        .btn-primary:focus-visible {
-            outline: 3px solid var(--accent-hover);
-            outline-offset: 2px;
-        }
+        .btn-primary:focus-visible { outline: 3px solid var(--accent-hover); outline-offset: 2px; }
         .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
         .btn-secondary {
             display: inline-flex; align-items: center; gap: 0.4rem;
@@ -320,6 +314,33 @@
         }
         .btn-icon:hover, .btn-icon:focus-visible { border-color: var(--accent); background: var(--bg); }
 
+        /* SOS Button */
+        .btn-sos {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.55rem 1rem;
+            font-size: 0.9rem; font-weight: 700;
+            color: #fff; background: var(--danger);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer; transition: all 0.2s;
+            font-family: var(--font);
+        }
+        .btn-sos:hover { background: #ef4444; box-shadow: 0 0 20px rgba(248,113,113,0.4); }
+
+        /* Metrics Bar */
+        .metrics-bar {
+            display: flex; gap: 1rem; align-items: center;
+            padding: 0.6rem 1rem;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 1.25rem;
+            font-size: 0.82rem; color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+        .metric-item { display: flex; align-items: center; gap: 0.3rem; }
+        .metric-value { color: var(--accent); font-weight: 700; }
+
         /* Schedule Timeline */
         .schedule-card .card-header-icon { background: var(--purple-bg); color: var(--purple); }
         .timeline { list-style: none; position: relative; }
@@ -370,10 +391,6 @@
             font-size: 0.72rem; font-weight: 600;
             text-transform: uppercase; letter-spacing: 0.04em;
         }
-        .badge-critical { background: var(--danger-bg); color: var(--danger); }
-        .badge-high { background: var(--warning-bg); color: var(--warning); }
-        .badge-normal { background: var(--accent-glow); color: var(--accent); }
-        .badge-low { background: var(--success-bg); color: var(--success); }
 
         /* Tasks Card */
         .tasks-card .card-header-icon { background: var(--success-bg); color: var(--success); }
@@ -466,6 +483,90 @@
             display: flex; align-items: flex-start; gap: 0.5rem;
         }
 
+        /* Chat Panel */
+        .chat-card .card-header-icon { background: rgba(56,189,248,0.1); color: #38bdf8; }
+        .chat-messages {
+            max-height: 300px; overflow-y: auto;
+            margin-bottom: 1rem; padding: 0.5rem 0;
+        }
+        .chat-msg {
+            display: flex; gap: 0.6rem; margin-bottom: 0.8rem;
+            animation: fadeInUp 0.3s ease;
+        }
+        .chat-msg-avatar {
+            width: 28px; height: 28px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; flex-shrink: 0;
+        }
+        .chat-msg.user .chat-msg-avatar { background: var(--accent-glow); color: var(--accent); }
+        .chat-msg.ai .chat-msg-avatar { background: rgba(52,211,153,0.1); color: var(--success); }
+        .chat-msg-text {
+            padding: 0.5rem 0.9rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem; line-height: 1.5;
+            max-width: 85%;
+        }
+        .chat-msg.user .chat-msg-text { background: var(--accent-glow); }
+        .chat-msg.ai .chat-msg-text { background: var(--surface-2); border: 1px solid var(--border); }
+        .chat-input-row {
+            display: flex; gap: 0.5rem;
+        }
+        .chat-input {
+            flex: 1; padding: 0.7rem 1rem;
+            font-size: 0.95rem; font-family: var(--font);
+            color: var(--text); background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            outline: none;
+        }
+        .chat-input:focus { border-color: var(--accent); }
+        .chat-send {
+            padding: 0.7rem 1.2rem;
+            font-size: 0.95rem; font-weight: 700;
+            color: #fff; background: var(--accent);
+            border: none; border-radius: var(--radius-sm);
+            cursor: pointer; font-family: var(--font);
+        }
+        .chat-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* Replan Modal */
+        .replan-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.7); z-index: 1000;
+            align-items: center; justify-content: center;
+        }
+        .replan-overlay.active { display: flex; }
+        .replan-modal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem; max-width: 480px; width: 90%;
+        }
+        .replan-modal h2 { font-size: 1.2rem; margin-bottom: 1rem; }
+        .replan-modal textarea {
+            min-height: 4rem; margin-bottom: 1rem;
+        }
+        .replan-actions { display: flex; gap: 0.75rem; }
+
+        /* SOS Modal */
+        .sos-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.8); z-index: 1001;
+            align-items: center; justify-content: center;
+        }
+        .sos-overlay.active { display: flex; }
+        .sos-modal {
+            background: var(--surface);
+            border: 2px solid var(--danger);
+            border-radius: var(--radius);
+            padding: 2rem; max-width: 520px; width: 90%;
+        }
+        .sos-modal h2 { color: var(--danger); margin-bottom: 0.5rem; }
+        .sos-content { margin: 1rem 0; font-size: 0.95rem; line-height: 1.6; }
+        .sos-field { margin-bottom: 0.5rem; }
+        .sos-field-label { font-weight: 700; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; }
+        .sos-field-value { padding: 0.3rem 0; }
+
         /* Result Tabs */
         .result-tabs {
             display: flex; gap: 0.5rem;
@@ -489,10 +590,7 @@
             border-color: var(--accent);
             background: var(--surface-2);
         }
-        .tab-btn:focus-visible {
-            outline: 3px solid var(--accent);
-            outline-offset: 2px;
-        }
+        .tab-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
         .tab-btn.active {
             color: #fff;
             background: var(--accent);
@@ -504,9 +602,7 @@
             border-radius: 100px;
             background: rgba(255,255,255,0.15);
         }
-        .tab-btn.active .tab-badge {
-            background: rgba(255,255,255,0.25);
-        }
+        .tab-btn.active .tab-badge { background: rgba(255,255,255,0.25); }
         .tab-panel { display: none; }
         .tab-panel.active { display: block; animation: fadeInUp 0.3s ease forwards; }
 
@@ -534,10 +630,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .animate-in { animation: fadeInUp 0.4s ease forwards; }
-        .delay-1 { animation-delay: 0.1s; opacity: 0; }
-        .delay-2 { animation-delay: 0.2s; opacity: 0; }
-        .delay-3 { animation-delay: 0.3s; opacity: 0; }
-        .delay-4 { animation-delay: 0.4s; opacity: 0; }
 
         @media (max-width: 600px) {
             .hero h1 { font-size: 1.8rem; }
@@ -551,6 +643,52 @@
             display: none; font-size: 0.9rem;
             color: var(--text-muted); margin-top: 0.5rem;
         }
+
+        /* Safety Banner */
+        .safety-banner {
+            display: flex; align-items: center; gap: 0.6rem;
+            padding: 0.75rem 1.2rem; margin-bottom: 1rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600; font-size: 0.95rem;
+            animation: fadeIn 0.4s ease;
+        }
+        .safety-banner.risk-low {
+            background: var(--success-bg); border: 1px solid var(--success); color: var(--success);
+        }
+        .safety-banner.risk-medium {
+            background: var(--warning-bg); border: 1px solid var(--warning); color: var(--warning);
+        }
+        .safety-banner.risk-high {
+            background: var(--danger-bg); border: 1px solid var(--danger); color: var(--danger);
+        }
+        .safety-banner-icon { font-size: 1.2rem; }
+
+        /* Chat loading dots */
+        .chat-loading .chat-msg-text::after {
+            content: ''; display: inline-block;
+            width: 1.5em; text-align: left;
+            animation: dots 1.4s steps(4,end) infinite;
+        }
+        @keyframes dots {
+            0% { content: ''; }
+            25% { content: '.'; }
+            50% { content: '..'; }
+            75% { content: '...'; }
+        }
+
+        /* Error with retry */
+        .error-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+        .btn-retry {
+            background: var(--danger); color: #fff; border: none;
+            padding: 0.4rem 1rem; border-radius: var(--radius-sm);
+            font-size: 0.85rem; cursor: pointer; font-weight: 600;
+        }
+        .btn-retry:hover { opacity: 0.9; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -562,10 +700,11 @@
     <h1>Guidelight AI</h1>
     <p>Your AI Daily Independence Copilot for Visually Impaired Users</p>
     <div class="hero-badges" aria-label="Powered by">
-        <span class="badge"><span class="badge-icon">✦</span> Gemini 3.1 Flash-Lite</span>
-        <span class="badge"><span class="badge-icon">🤖</span> Multi-Agent (ADK)</span>
+        <span class="badge"><span class="badge-icon">✦</span> Gemini 2.5 Flash (Vertex AI)</span>
+        <span class="badge"><span class="badge-icon">🤖</span> 5 AI Agents (ADK)</span>
         <span class="badge"><span class="badge-icon">🔧</span> MCP Tools</span>
-        <span class="badge"><span class="badge-icon">♿</span> Accessibility-First</span>
+        <span class="badge"><span class="badge-icon">⚡</span> Real-time Streaming</span>
+        <span class="badge"><span class="badge-icon">♿</span> WCAG 2.1 AA</span>
     </div>
 </header>
 
@@ -678,6 +817,21 @@
 
     <div id="results" class="results">
 
+        <!-- Performance Metrics Bar -->
+        <div id="metrics-bar" class="metrics-bar" style="display:none;">
+            <div class="metric-item">⚡ <span class="metric-value" id="metric-time">—</span> ms</div>
+            <div class="metric-item">🤖 <span class="metric-value" id="metric-calls">2</span> LLM calls</div>
+            <div class="metric-item">🔧 <span class="metric-value" id="metric-agents">5</span> agents</div>
+            <div class="metric-item">📋 <span class="metric-value" id="metric-events">—</span> events</div>
+            <div class="metric-item" id="gcal-status" style="display:none;">📆 <span class="metric-value" id="gcal-status-text">—</span></div>
+        </div>
+
+        <!-- Safety Alert Banner (prominent, above everything) -->
+        <div id="safety-banner" class="safety-banner" style="display:none;" role="alert" aria-live="polite">
+            <span id="safety-banner-icon" class="safety-banner-icon">🛡️</span>
+            <span id="safety-banner-text">Plan looks safe</span>
+        </div>
+
         <!-- Summary always visible -->
         <section id="summary-card" class="card summary-card animate-in" aria-label="Daily plan summary" style="display:none;">
             <div class="card-header">
@@ -689,11 +843,17 @@
                 <button id="read-aloud-btn" class="btn-icon" type="button" aria-label="Read plan aloud">
                     🔊 Read Aloud
                 </button>
-                <button id="stop-speech-btn" class="btn-icon" type="button" style="display:none;" aria-label="Stop reading">
-                    ⏹️ Stop
+                <button id="stop-speech-btn" class="btn-icon" type="button" style="display:none; background:var(--danger-bg); color:var(--danger); border:1px solid var(--danger);" aria-label="Stop reading">
+                    ⏹️ Stop Reading
+                </button>
+                <button id="replan-btn" class="btn-icon" type="button" aria-label="Adjust plan">
+                    🔄 Adjust Plan
+                </button>
+                <button id="sos-btn" class="btn-sos" type="button" aria-label="Emergency SOS - share context with caregiver">
+                    🆘 SOS
                 </button>
                 <button id="new-plan-btn" class="btn-icon" type="button" aria-label="Plan a new day">
-                    🔄 New Plan
+                    ✨ New Plan
                 </button>
             </div>
         </section>
@@ -708,6 +868,9 @@
             </button>
             <button class="tab-btn" data-tab="safety-panel" aria-selected="false" role="tab">
                 🛡️ Safety <span id="tab-risk-label" class="tab-badge"></span>
+            </button>
+            <button class="tab-btn" data-tab="chat-panel" aria-selected="false" role="tab">
+                💬 Chat <span class="tab-badge">Live</span>
             </button>
         </nav>
 
@@ -753,12 +916,59 @@
             </section>
         </div>
 
+        <div id="chat-panel" class="tab-panel" role="tabpanel">
+            <section id="chat-card" class="card" aria-label="Conversational follow-up">
+                <div class="card-header">
+                    <div class="card-header-icon" style="background:rgba(56,189,248,0.1);color:#38bdf8;">💬</div>
+                    <h2>Ask Guidelight</h2>
+                    <span class="card-meta" style="background:rgba(56,189,248,0.1);color:#38bdf8;">Live</span>
+                </div>
+                <div id="chat-messages" class="chat-messages" aria-live="polite" aria-label="Chat messages">
+                    <div class="chat-msg ai">
+                        <div class="chat-msg-avatar">🌅</div>
+                        <div class="chat-msg-text">I'm here to help! Ask me things like "What's next?", "Am I on track?", "Skip my 3pm task", or "I'm running late".</div>
+                    </div>
+                </div>
+                <div class="chat-input-row">
+                    <input type="text" id="chat-input" class="chat-input" placeholder="Ask about your plan…" aria-label="Chat message">
+                    <button id="chat-send" class="chat-send" type="button" aria-label="Send message">Send</button>
+                </div>
+            </section>
+        </div>
+
     </div>
 
 </main>
 
+<!-- Replan Modal -->
+<div id="replan-overlay" class="replan-overlay" role="dialog" aria-label="Adjust your plan">
+    <div class="replan-modal">
+        <h2>🔄 Adjust Your Plan</h2>
+        <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Tell me what changed and I'll restructure your remaining day.</p>
+        <textarea id="replan-reason" placeholder="e.g. I'm running 30 minutes late, my appointment got cancelled, I need to add a pharmacy visit…"></textarea>
+        <div class="replan-actions">
+            <button id="replan-submit" class="btn-primary" type="button">⚡ Replan</button>
+            <button id="replan-cancel" class="btn-secondary" type="button">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- SOS Modal -->
+<div id="sos-overlay" class="sos-overlay" role="alertdialog" aria-label="Emergency context">
+    <div class="sos-modal">
+        <h2>🆘 Emergency Context</h2>
+        <p style="color:var(--text-muted);font-size:0.9rem;">Share this with your caregiver or emergency contact:</p>
+        <div id="sos-content" class="sos-content"></div>
+        <div style="display:flex;gap:0.75rem;margin-top:1rem;flex-wrap:wrap;">
+            <button id="sos-copy" class="btn-primary" type="button" style="font-size:0.95rem;">📋 Copy to Clipboard</button>
+            <button id="sos-speak" class="btn-icon" type="button">🔊 Read Aloud</button>
+            <button id="sos-close" class="btn-secondary" type="button">Close</button>
+        </div>
+    </div>
+</div>
+
 <footer>
-    <p>Guidelight AI · Google Gen AI Academy Hackathon · Powered by <a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite-preview" target="_blank" rel="noopener">Gemini 3.1 Flash-Lite</a> + <a href="https://google.github.io/adk-docs/" target="_blank" rel="noopener">Google ADK</a></p>
+    <p>Guidelight AI v2.0 · Google Gen AI Academy Hackathon · Powered by <a href="https://cloud.google.com/vertex-ai/generative-ai/docs/gemini-v2" target="_blank" rel="noopener">Gemini 2.5 Flash</a> on <a href="https://cloud.google.com/vertex-ai" target="_blank" rel="noopener">Vertex AI</a> + <a href="https://google.github.io/adk-docs/" target="_blank" rel="noopener">Google ADK</a></p>
 </footer>
 
 <script>
@@ -779,15 +989,16 @@
     var readBtn     = D('read-aloud-btn');
     var stopBtn     = D('stop-speech-btn');
     var newPlanBtn  = D('new-plan-btn');
+    var replanBtn   = D('replan-btn');
+    var sosBtn      = D('sos-btn');
 
-    var stepIds = ['step-planner','step-calendar','step-tasks','step-safety','step-summary'];
-    var stepLabels = [
-        'Creating your daily plan…',
-        'Scheduling calendar events…',
-        'Setting up task tracking…',
-        'Running safety checks…',
-        'Writing your summary…'
-    ];
+    var stepLabels = {
+        planner: 'Creating your daily plan…',
+        calendar: 'Scheduling calendar events…',
+        tasks: 'Setting up task tracking…',
+        safety: 'Running safety checks…',
+        summary: 'Writing your summary…'
+    };
     var currentPlanId = null;
 
     function esc(str) {
@@ -797,44 +1008,41 @@
     }
 
     function showError(msg) {
-        errorText.textContent = msg;
+        errorText.innerHTML = esc(msg) + '<div class="error-actions"><button class="btn-retry" onclick="document.getElementById(\'plan-btn\').click()">🔄 Retry</button></div>';
         errorBanner.classList.add('active');
     }
     function hideError() { errorBanner.classList.remove('active'); }
 
     /* Pipeline Stepper */
     function resetPipeline() {
-        stepIds.forEach(function(id) { D(id).className = 'pipeline-step'; });
+        ['step-planner','step-calendar','step-tasks','step-safety','step-summary'].forEach(function(id) {
+            D(id).className = 'pipeline-step';
+        });
     }
 
-    var pipeInterval = null;
     function startPipeline() {
         resetPipeline();
         pipeline.classList.add('active');
         results.classList.remove('active');
         hideError();
         pipeSpinner.style.display = 'block';
+        pipeStatus.textContent = 'AI Agents are planning your day…';
+    }
 
-        var step = 0;
-        D(stepIds[0]).classList.add('active');
-        pipeStatus.textContent = stepLabels[0];
-
-        pipeInterval = setInterval(function() {
-            if (step < stepIds.length) {
-                D(stepIds[step]).classList.remove('active');
-                D(stepIds[step]).classList.add('done');
-            }
-            step++;
-            if (step < stepIds.length) {
-                D(stepIds[step]).classList.add('active');
-                pipeStatus.textContent = stepLabels[step];
-            }
-        }, 3500);
+    function updateStep(step, status) {
+        var el = D('step-' + step);
+        if (!el) return;
+        el.classList.remove('active', 'done');
+        if (status === 'active') {
+            el.classList.add('active');
+            pipeStatus.textContent = stepLabels[step] || 'Processing…';
+        } else if (status === 'done') {
+            el.classList.add('done');
+        }
     }
 
     function finishPipeline() {
-        clearInterval(pipeInterval);
-        stepIds.forEach(function(id) {
+        ['step-planner','step-calendar','step-tasks','step-safety','step-summary'].forEach(function(id) {
             D(id).classList.remove('active');
             D(id).classList.add('done');
         });
@@ -852,6 +1060,7 @@
         events.sort(function(a, b) { return (a.start_time || '').localeCompare(b.start_time || ''); });
         D('event-count').textContent = events.length + ' events';
         D('tab-event-count').textContent = events.length;
+        D('metric-events').textContent = events.length;
 
         events.forEach(function(ev) {
             var li = document.createElement('li');
@@ -893,6 +1102,7 @@
         if (!tasks || !tasks.length) { card.style.display = 'none'; return; }
 
         tasks.sort(function(a, b) { return (a.scheduled_time || '').localeCompare(b.scheduled_time || ''); });
+        D('tab-task-count').textContent = '0/' + tasks.length;
 
         tasks.forEach(function(t) {
             var li = document.createElement('li');
@@ -910,7 +1120,6 @@
                 '<span class="task-text">' + esc(t.title) + '</span>' +
                 '<span class="task-time">' + esc(time) + '</span>';
             list.appendChild(li);
-
             li.querySelector('.task-check').addEventListener('click', function() { completeTask(t.task_id, li); });
         });
 
@@ -952,6 +1161,7 @@
                     D('task-progress-bar').style.width = pct + '%';
                     D('task-progress-bar').setAttribute('aria-valuenow', pct);
                     D('task-progress-label').textContent = done + '/' + total + ' done';
+                    D('tab-task-count').textContent = done + '/' + total;
                 }
             })
             .catch(function(e) { console.error('Complete task failed', e); });
@@ -990,39 +1200,137 @@
         if (safety.recommendations && safety.recommendations.length) {
             safety.recommendations.forEach(function(r) {
                 var li = document.createElement('li');
-                li.textContent = r;
+                li.innerHTML = '💡 ' + esc(r);
                 recList.appendChild(li);
             });
             recDiv.style.display = 'block';
         } else {
             recDiv.style.display = 'none';
         }
-
         card.style.display = 'block';
     }
 
-    /* Main Flow */
+    /* ═══════════════════════════════════════════════════════════════
+       STREAMING SSE PIPELINE
+    ═══════════════════════════════════════════════════════════════ */
     function planMyDay() {
         var intent = intentInput.value.trim();
-        if (!intent) {
-            intentInput.focus();
-            showError('Please describe your day first.');
-            return;
-        }
+        if (!intent) { intentInput.focus(); showError('Please describe your day first.'); return; }
 
         hideError();
         planBtn.disabled = true;
         ['summary-card','schedule-card','tasks-card','safety-card'].forEach(function(id) { D(id).style.display = 'none'; });
+        D('metrics-bar').style.display = 'none';
 
         startPipeline();
 
+        // Use SSE streaming endpoint
+        fetch('/daily-intent-stream', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ intent: intent }),
+        }).then(function(response) {
+            if (!response.ok) throw new Error('Server error (' + response.status + ')');
+            var reader = response.body.getReader();
+            var decoder = new TextDecoder();
+            var buffer = '';
+            var pendingEvent = 'message'; // Track event type across chunks
+
+            function processStream() {
+                return reader.read().then(function(result) {
+                    if (result.done) return;
+                    buffer += decoder.decode(result.value, { stream: true });
+
+                    var lines = buffer.split('\n');
+                    buffer = lines.pop(); // Keep incomplete line in buffer
+
+                    for (var i = 0; i < lines.length; i++) {
+                        var line = lines[i].trim();
+                        if (!line || line.startsWith(':')) continue; // Skip empty lines and comments (pings)
+                        if (line.startsWith('event:')) {
+                            pendingEvent = line.slice(6).trim();
+                        } else if (line.startsWith('data:')) {
+                            var dataStr = line.slice(5).trim();
+                            handleSSE(pendingEvent, dataStr);
+                            pendingEvent = 'message'; // Reset after consuming
+                        }
+                    }
+                    return processStream();
+                });
+            }
+
+            return processStream();
+        }).catch(function(err) {
+            // Fallback to non-streaming endpoint
+            console.warn('SSE failed, falling back:', err.message);
+            planMyDayFallback(intent);
+        }).finally(function() {
+            planBtn.disabled = false;
+        });
+    }
+
+    function handleSSE(eventType, dataStr) {
+        try {
+            var data = JSON.parse(dataStr);
+        } catch (e) { return; }
+
+        if (eventType === 'step') {
+            updateStep(data.step, data.status);
+        } else if (eventType === 'complete') {
+            finishPipeline();
+            currentPlanId = data.plan_id;
+            results.classList.add('active');
+
+            // Show metrics
+            if (data.metrics) {
+                D('metric-time').textContent = data.metrics.pipeline_ms;
+                D('metric-calls').textContent = data.metrics.llm_calls;
+                D('metrics-bar').style.display = 'flex';
+            }
+
+            // Show GCal sync status
+            if (data.calendar_events) {
+                var synced = data.calendar_events.filter(function(e) { return e.synced; }).length;
+                var total = data.calendar_events.length;
+                D('metric-events').textContent = total;
+                if (synced > 0) {
+                    D('gcal-status').style.display = '';
+                    D('gcal-status-text').textContent = synced + '/' + total + ' synced to Google Calendar';
+                }
+            }
+
+            // Show safety banner (prominent)
+            if (data.safety && data.safety.risk_level) {
+                var banner = D('safety-banner');
+                banner.className = 'safety-banner risk-' + data.safety.risk_level;
+                var icon = data.safety.risk_level === 'low' ? '✅' : data.safety.risk_level === 'medium' ? '⚠️' : '🚨';
+                D('safety-banner-icon').textContent = icon;
+                D('safety-banner-text').textContent = data.safety.overall_assessment || ('Risk level: ' + data.safety.risk_level);
+                banner.style.display = 'flex';
+            }
+
+            if (data.final_summary) {
+                D('summary-text').textContent = data.final_summary;
+                D('summary-card').style.display = 'block';
+                speakText(data.final_summary);
+            }
+            renderSchedule(data.calendar_events);
+            renderTasks(data.tasks);
+            renderSafety(data.safety);
+            D('result-tabs').style.display = 'flex';
+            switchTab('schedule-panel');
+        }
+    }
+
+    // Fallback for browsers without ReadableStream
+    function planMyDayFallback(intent) {
         fetch('/daily-intent', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ intent: intent }),
         })
         .then(function(res) {
-            if (!res.ok) return res.json().catch(function() { return {}; }).then(function(err) { throw new Error(err.detail || 'Server error (' + res.status + ')'); });
+            if (!res.ok) return res.json().catch(function() { return {}; }).then(function(err) { throw new Error(err.detail || 'Server error'); });
             return res.json();
         })
         .then(function(data) {
@@ -1033,7 +1341,6 @@
         .then(function(plan) {
             finishPipeline();
             results.classList.add('active');
-
             if (plan.final_summary) {
                 D('summary-text').textContent = plan.final_summary;
                 D('summary-card').style.display = 'block';
@@ -1042,29 +1349,175 @@
             renderSchedule(plan.calendar_events);
             renderTasks(plan.tasks);
             renderSafety(plan.safety);
-
-            // Show tabs and activate first tab
             D('result-tabs').style.display = 'flex';
             switchTab('schedule-panel');
         })
         .catch(function(err) {
             finishPipeline();
             showError(err.message);
-        })
-        .finally(function() {
-            planBtn.disabled = false;
         });
     }
 
     planBtn.addEventListener('click', planMyDay);
     intentInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-            e.preventDefault();
-            planMyDay();
-        }
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); planMyDay(); }
     });
 
-    /* Tab Switching */
+    /* ═══════════════════════════════════════════════════════════════
+       CONVERSATIONAL FOLLOW-UP CHAT
+    ═══════════════════════════════════════════════════════════════ */
+    var chatMessages = D('chat-messages');
+    var chatInput = D('chat-input');
+    var chatSend = D('chat-send');
+
+    function addChatMessage(role, text) {
+        var div = document.createElement('div');
+        div.className = 'chat-msg ' + role;
+        div.innerHTML =
+            '<div class="chat-msg-avatar">' + (role === 'user' ? '👤' : '🌅') + '</div>' +
+            '<div class="chat-msg-text">' + esc(text) + '</div>';
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function sendChat() {
+        var msg = chatInput.value.trim();
+        if (!msg || !currentPlanId) return;
+
+        chatInput.value = '';
+        chatSend.disabled = true;
+        addChatMessage('user', msg);
+
+        // Show loading indicator
+        var loadingDiv = document.createElement('div');
+        loadingDiv.className = 'chat-msg ai chat-loading';
+        loadingDiv.id = 'chat-loading';
+        loadingDiv.innerHTML = '<div class="chat-msg-avatar">🌅</div><div class="chat-msg-text">Thinking</div>';
+        chatMessages.appendChild(loadingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        fetch('/chat/' + encodeURIComponent(currentPlanId), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: msg }),
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            var ld = D('chat-loading'); if (ld) ld.remove();
+            addChatMessage('ai', data.response);
+            speakText(data.response);
+        })
+        .catch(function(err) {
+            var ld = D('chat-loading'); if (ld) ld.remove();
+            addChatMessage('ai', 'Sorry, I had trouble processing that. Please try again.');
+        })
+        .finally(function() { chatSend.disabled = false; chatInput.focus(); });
+    }
+
+    chatSend.addEventListener('click', sendChat);
+    chatInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); sendChat(); }
+    });
+
+    /* ═══════════════════════════════════════════════════════════════
+       ADAPTIVE REPLANNING
+    ═══════════════════════════════════════════════════════════════ */
+    var replanOverlay = D('replan-overlay');
+    var replanReason = D('replan-reason');
+    var replanSubmit = D('replan-submit');
+    var replanCancel = D('replan-cancel');
+
+    replanBtn.addEventListener('click', function() {
+        replanOverlay.classList.add('active');
+        replanReason.focus();
+    });
+    replanCancel.addEventListener('click', function() {
+        replanOverlay.classList.remove('active');
+    });
+    replanOverlay.addEventListener('click', function(e) {
+        if (e.target === replanOverlay) replanOverlay.classList.remove('active');
+    });
+
+    replanSubmit.addEventListener('click', function() {
+        var reason = replanReason.value.trim();
+        if (!reason || !currentPlanId) return;
+
+        replanSubmit.disabled = true;
+        replanSubmit.textContent = '⏳ Replanning…';
+
+        var now = new Date();
+        var currentTime = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+
+        fetch('/replan/' + encodeURIComponent(currentPlanId), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ reason: reason, current_time: currentTime }),
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            replanOverlay.classList.remove('active');
+            replanReason.value = '';
+            // Update UI with new plan
+            renderSchedule(data.calendar_events);
+            renderTasks(data.tasks);
+            renderSafety(data.safety);
+            // Notify via chat
+            addChatMessage('ai', '✅ Plan adjusted! I\'ve restructured your remaining day based on: "' + reason + '"');
+            switchTab('schedule-panel');
+        })
+        .catch(function(err) {
+            showError('Replanning failed: ' + err.message);
+        })
+        .finally(function() {
+            replanSubmit.disabled = false;
+            replanSubmit.textContent = '⚡ Replan';
+        });
+    });
+
+    /* ═══════════════════════════════════════════════════════════════
+       EMERGENCY SOS
+    ═══════════════════════════════════════════════════════════════ */
+    var sosOverlay = D('sos-overlay');
+    var sosContent = D('sos-content');
+    var sosCopy = D('sos-copy');
+    var sosSpeak = D('sos-speak');
+    var sosClose = D('sos-close');
+
+    sosBtn.addEventListener('click', function() {
+        if (!currentPlanId) return;
+        fetch('/sos/' + encodeURIComponent(currentPlanId))
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                sosContent.innerHTML =
+                    '<div class="sos-field"><div class="sos-field-label">Current Activity</div><div class="sos-field-value">' + esc(data.current_activity) + '</div></div>' +
+                    '<div class="sos-field"><div class="sos-field-label">Next Activity</div><div class="sos-field-value">' + esc(data.next_activity) + '</div></div>' +
+                    '<div class="sos-field"><div class="sos-field-label">Progress</div><div class="sos-field-value">' + esc(data.progress) + '</div></div>' +
+                    '<div class="sos-field"><div class="sos-field-label">Medication</div><div class="sos-field-value">Taken: ' + esc((data.medication_status.taken || []).join(', ') || 'None yet') + '<br>Pending: ' + esc((data.medication_status.pending || []).join(', ') || 'All done') + '</div></div>' +
+                    (data.overdue_items && data.overdue_items.length ? '<div class="sos-field"><div class="sos-field-label" style="color:var(--danger);">Overdue</div><div class="sos-field-value" style="color:var(--danger);">' + esc(data.overdue_items.join(', ')) + '</div></div>' : '') +
+                    '<div class="sos-field"><div class="sos-field-label">Original Plan</div><div class="sos-field-value" style="font-size:0.85rem;">' + esc(data.original_plan_intent) + '</div></div>';
+                sosContent.dataset.spoken = data.spoken_summary;
+                sosOverlay.classList.add('active');
+            });
+    });
+
+    sosCopy.addEventListener('click', function() {
+        var text = sosContent.dataset.spoken || sosContent.textContent;
+        navigator.clipboard.writeText(text).then(function() {
+            sosCopy.textContent = '✓ Copied!';
+            setTimeout(function() { sosCopy.textContent = '📋 Copy to Clipboard'; }, 2000);
+        });
+    });
+    sosSpeak.addEventListener('click', function() {
+        speakText(sosContent.dataset.spoken || sosContent.textContent);
+    });
+    sosClose.addEventListener('click', function() { sosOverlay.classList.remove('active'); });
+    sosOverlay.addEventListener('click', function(e) {
+        if (e.target === sosOverlay) sosOverlay.classList.remove('active');
+    });
+
+    /* ═══════════════════════════════════════════════════════════════
+       TAB SWITCHING
+    ═══════════════════════════════════════════════════════════════ */
     function switchTab(panelId) {
         document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
         document.querySelectorAll('.tab-btn').forEach(function(b) {
@@ -1081,9 +1534,7 @@
     }
 
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            switchTab(btn.dataset.tab);
-        });
+        btn.addEventListener('click', function() { switchTab(btn.dataset.tab); });
     });
 
     /* Quick Scenarios */
@@ -1103,6 +1554,11 @@
         results.classList.remove('active');
         ['summary-card','schedule-card','tasks-card','safety-card'].forEach(function(id) { D(id).style.display = 'none'; });
         D('result-tabs').style.display = 'none';
+        D('metrics-bar').style.display = 'none';
+        D('safety-banner').style.display = 'none';
+        D('gcal-status').style.display = 'none';
+        // Clear chat
+        chatMessages.innerHTML = '<div class="chat-msg ai"><div class="chat-msg-avatar">🌅</div><div class="chat-msg-text">I\'m here to help! Ask me things like "What\'s next?", "Am I on track?", "Skip my 3pm task", or "I\'m running late".</div></div>';
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
@@ -1163,6 +1619,13 @@
         stopBtn.style.display = 'inline-flex';
         u.onend = function() { stopBtn.style.display = 'none'; };
         u.onerror = function() { stopBtn.style.display = 'none'; };
+        /* Chrome pauses long utterances after ~15s; keep-alive workaround */
+        var resumeTimer = setInterval(function() {
+            if (!synth.speaking) { clearInterval(resumeTimer); return; }
+            synth.pause(); synth.resume();
+        }, 10000);
+        u.onend = function() { clearInterval(resumeTimer); stopBtn.style.display = 'none'; };
+        u.onerror = function() { clearInterval(resumeTimer); stopBtn.style.display = 'none'; };
         synth.speak(u);
     }
 
@@ -1173,6 +1636,14 @@
     stopBtn.addEventListener('click', function() {
         if (synth) synth.cancel();
         stopBtn.style.display = 'none';
+    });
+
+    /* Keyboard shortcuts */
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            replanOverlay.classList.remove('active');
+            sosOverlay.classList.remove('active');
+        }
     });
 
 })();

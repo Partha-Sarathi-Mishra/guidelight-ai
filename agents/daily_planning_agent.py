@@ -25,24 +25,29 @@ Your job:
       "end_time": "HH:MM",
       "activity": "description",
       "category": "medication|meal|rest|appointment|exercise|personal|general",
-      "priority": "low|normal|high|critical"
+      "priority": "low|normal|high|critical",
+      "notes": "optional accessibility-relevant note"
     }
   ],
   "reminders": [
-    {"time": "HH:MM", "message": "reminder text"}
+    {"time": "HH:MM", "message": "reminder text", "priority": "normal|high|critical"}
   ],
   "constraints": ["list of scheduling constraints applied"],
-  "assumptions": ["list of assumptions you made"]
+  "assumptions": ["list of assumptions you made"],
+  "accessibility_notes": ["any notes about navigation, lighting, or environmental considerations"]
 }
 
 Rules:
-- Always include rest breaks (15 min) between activities.
-- Always include meal times (breakfast, lunch, dinner).
-- Medication reminders are CRITICAL priority.
+- Always include rest breaks (15 min) between activities spaced less than 2 hours apart.
+- Always include meal times (breakfast ~7-8am, lunch ~12-1pm, dinner ~6-7pm).
+- Medication reminders are CRITICAL priority — never omit them.
 - Medical appointments are HIGH priority.
+- Allow extra transition time (15-20 min) between locations for navigation.
 - Start the day at 07:00 and end by 21:00 unless the user says otherwise.
-- Keep activity descriptions concise and spoken-friendly.
-- Output ONLY valid JSON. No markdown fences.
+- Keep activity descriptions concise, clear, and spoken-friendly.
+- Consider time of day: schedule cognitively demanding tasks in the morning.
+- Flag if the day seems overloaded (>8 activities excluding rest/meals).
+- Output ONLY valid JSON. No markdown fences, no explanation text.
 """
 
 DailyPlanningAgent = Agent(

@@ -1,175 +1,225 @@
-# Guidelight AI – Demo Video Script (3 Minutes)
+# Guidelight AI – Demo Script (3 Minutes)
 
 **Total Duration:** 3:00  
 **Recording tool:** QuickTime (Cmd+Shift+5) or OBS  
 **Resolution:** 1920×1080, browser full-screen  
-**URL:** https://guidelight-ai-669449334512.us-central1.run.app  
+**URL:** http://localhost:8080 (local) or Cloud Run URL (deployed)
 
-> 💡 Pre-record tip: Open the URL before recording. Do one dry run first.
-> Keep your narration calm, clear, and slightly slow — you are presenting
-> an accessibility product.
+> 💡 **Pre-record tips:**
+> - Open the URL before recording. Do one dry run.
+> - Keep narration calm, clear, and slightly slow — you're presenting an accessibility product.
+> - Have a plan already generated in another tab as backup (in case of API latency).
 
 ---
 
-## 🎬 SCENE 1 — Hook + Problem (0:00 – 0:30)
+## 🎬 SCENE 1 — Hook + Problem (0:00 – 0:25)
 
-**SCREEN:** Show the landing page hero section (gradient header with title).  
-**ACTION:** Slowly scroll down to reveal the 6 scenario cards.
+**SCREEN:** Show the landing page hero section with badges: Gemini 2.5 Flash, 5 AI Agents, MCP Tools, Real-time Streaming.  
+**ACTION:** Slowly scroll to reveal the 6 scenario cards.
 
 > **SAY:**
 >
 > "Hi, I'm Parthasarathi. This is **Guidelight AI** — an AI-powered
 > daily independence copilot for visually impaired users.
 >
-> 2.2 billion people worldwide live with vision impairment. Today's
-> assistive tools can *read* — but they can't *reason*, *plan*, or
-> watch out for your safety.
+> 2.2 billion people worldwide have vision impairment. Assistive tools
+> today can *read* — but they can't *reason*, *plan*, or *watch out
+> for your safety*.
 >
-> Guidelight AI changes that. It's a multi-agent system built with
-> **Google ADK**, **MCP tools**, and **Gemini 3.1 Flash-Lite** that
-> plans, schedules, tracks, and *safeguards* your entire day."
+> Guidelight AI changes that. Built with **Google ADK**, **MCP tools**,
+> and **Gemini 2.5 Flash on Vertex AI** — it plans, schedules, tracks,
+> and *safeguards* your entire day using 5 specialized AI agents."
 
 ---
 
-## 🎬 SCENE 2 — Live Demo: Scenario Card (0:30 – 1:00)
+## 🎬 SCENE 2 — Live Demo: SSE Pipeline (0:25 – 1:00)
 
-**SCREEN:** The 6 quick-scenario cards are visible.  
-**ACTION:** Click the **"🏥 Medical Day"** card. The text auto-fills into the input box.
-
-> **SAY:**
->
-> "Let me show you. I'll click the Medical Day scenario — it fills in
-> a realistic daily request for a visually impaired user."
-
-**ACTION:** Click **🚀 Plan My Day** button.  
-**SCREEN:** Watch the **5-step animated stepper** progress (Understand → Plan → Schedule → Evaluate → Done).
+**ACTION:** Click the **"🏥 Medical Day"** scenario card. Text auto-fills.
 
 > **SAY:**
 >
-> "Now watch the pipeline. Under the hood, **5 ADK agents** run in sequence.
-> But here's the key — we optimized this to just **2 LLM calls**.
-> The Calendar and Task agents run *programmatically* through MCP tools —
-> no extra API calls needed. This cuts token usage by 70%."
+> "Let me show you. I'll click the Medical Day scenario — a real-world
+> request from a visually impaired user with medications, a doctor visit,
+> and daily routines."
 
-**SCREEN:** Results appear — tabs light up with badge counts.
+**ACTION:** Click **🚀 Plan My Day**.  
+**SCREEN:** Watch the **5-step animated SSE pipeline** stream in real-time.
+
+> **SAY:**
+>
+> "Watch the pipeline — it streams in real-time using Server-Sent Events.
+> Under the hood, **5 ADK agents** orchestrate the plan. But here's the
+> optimization — we reduced it to just **2 LLM calls**. Calendar events
+> and tasks are created *programmatically* through MCP tools — zero
+> extra API calls. That's a 70% token reduction."
+
+**SCREEN:** Results appear. Point out:
+- ⚡ **Metrics bar** — pipeline time in ms, 2 LLM calls, 5 agents
+- 📆 **GCal sync badge** — "X/Y synced to Google Calendar"
+- 🛡️ **Safety banner** (green/yellow/red) above all results
+
+> **SAY:**
+>
+> "Notice three things: the metrics bar shows real performance data —
+> under 3 seconds, just 2 LLM calls. The green banner is our **Safety
+> Agent** — it assessed this plan and found it safe. And those calendar
+> events? They're synced to an **actual Google Calendar** via OAuth2."
 
 ---
 
-## 🎬 SCENE 3 — Walk Through Results (1:00 – 1:50)
+## 🎬 SCENE 3 — Walk Through Results (1:00 – 1:40)
 
-### Schedule Tab (1:00 – 1:15)
-**ACTION:** Click the **📅 Schedule** tab (should be default).  
-**SCREEN:** Color-coded timeline with time slots and category dots.
-
-> **SAY:**
->
-> "The schedule tab shows a color-coded timeline. Each activity has a
-> time, category dot, and description. Medication is red, meals are
-> green, rest is blue, appointments are purple."
-
-### Tasks Tab (1:15 – 1:30)
-**ACTION:** Click the **📋 Tasks** tab.  
-**SCREEN:** Interactive checklist with checkboxes and progress bar.  
-**ACTION:** Check off 2-3 tasks to show the progress bar moving.
+### Schedule Tab (1:00 – 1:10)
+**ACTION:** Schedule tab should be default.  
+**SCREEN:** Color-coded timeline.
 
 > **SAY:**
 >
-> "The tasks tab is an interactive checklist. Users can mark tasks
-> complete — watch the progress bar update in real time. This is
-> powered by the MCP Task Store tool with a REST API."
+> "The schedule shows a color-coded timeline — medication in red,
+> meals in green, rest in blue, appointments in purple. Each event
+> is also in the user's real Google Calendar with reminders."
 
-### Safety Tab (1:30 – 1:50)
-**ACTION:** Click the **🛡️ Safety** tab.  
-**SCREEN:** Safety assessment card with risk level and alerts.
+### Tasks Tab + Interactive Checklist (1:10 – 1:25)
+**ACTION:** Click **✅ Tasks** tab. Check off 2-3 tasks.
 
 > **SAY:**
 >
-> "And here's our key differentiator — the **Safety Agent**. It
-> evaluates the entire plan for risks: missed medications, overloaded
-> schedules, risky transitions, and cognitive fatigue.
+> "Tasks are an interactive checklist powered by the MCP Task Store.
+> Watch the progress bar update in real-time as I complete tasks.
+> This gives users a tangible sense of accomplishment through their day."
+
+### Safety Tab (1:25 – 1:40)
+**ACTION:** Click **🛡️ Safety** tab.
+
+> **SAY:**
 >
-> No other daily planner does this. This is what makes Guidelight AI
-> an *independence copilot*, not just a scheduler."
+> "This is our **key differentiator** — the Safety Agent. It detects
+> five categories of risk: overloaded schedules, missed medications,
+> risky transitions, cognitive fatigue, and unsafe time windows.
+>
+> No other daily planner does this. This is what makes Guidelight an
+> *independence copilot*, not just a scheduler."
 
 ---
 
-## 🎬 SCENE 4 — Voice & Accessibility (1:50 – 2:15)
+## 🎬 SCENE 4 — Advanced v2.0 Features (1:40 – 2:20)
 
-**ACTION:** Scroll up. Click the **🎤 microphone** button and speak:
-*"Plan a relaxing day with lunch and an afternoon nap"*  
-**SCREEN:** Voice text appears in the input box.
-
-> **SAY:**
->
-> "The entire system is voice-first. Users can speak their plan using
-> the Web Speech API — completely hands-free."
-
-**ACTION:** Click **Plan My Day** again. When results load, click **🔊 Read Aloud** (summary section).
+### Conversational Chat (1:40 – 1:55)
+**ACTION:** Click **💬 Chat** tab. Type: `What's my next task?`
 
 > **SAY:**
 >
-> "And the summary is automatically read aloud via text-to-speech.
-> The UI is fully WCAG accessible — keyboard navigation, ARIA labels,
-> high contrast, screen-reader optimized. Accessibility was built in
-> from day one, not bolted on."
+> "After creating a plan, users can have a **conversation** with their
+> copilot. 'What's next?' — and it tells you, in a warm, spoken-friendly
+> tone. You can also say 'Skip my 3pm task' or 'Am I on track?'"
+
+### Adaptive Replanning (1:55 – 2:10)
+**ACTION:** Click **🔄 Adjust Plan** → Type: `My doctor appointment moved to 4pm`  
+**ACTION:** Click **⚡ Replan**.
+
+> **SAY:**
+>
+> "Real life doesn't follow a plan. With **adaptive replanning**, you
+> say 'My appointment moved to 4pm' — and the AI restructures your
+> entire remaining day. Critical items like medications are never dropped.
+> This uses 2 more LLM calls: one to replan, one for safety re-evaluation."
+
+### Emergency SOS (2:10 – 2:20)
+**ACTION:** Click **🆘 SOS** button. SOS modal appears with full context.
+
+> **SAY:**
+>
+> "And for emergencies — one tap on SOS generates a **shareable context
+> summary** for caregivers: current activity, medication status, what's
+> overdue. You can copy it to clipboard or have it read aloud."
 
 ---
 
-## 🎬 SCENE 5 — Architecture + Tech Stack (2:15 – 2:45)
+## 🎬 SCENE 5 — Voice + Accessibility (2:20 – 2:35)
 
-**SCREEN:** Switch to VS Code or a slide showing the architecture.  
-*(Option A: Open the README.md and scroll to the architecture diagram)*  
-*(Option B: Open the presentation slide 8 — Architecture Diagram)*
+**ACTION:** Click **✨ New Plan**. Click **🎙️ Speak** button and say:
+*"Plan a relaxing day with a morning walk, lunch, and reading time."*
 
 > **SAY:**
 >
-> "Here's the architecture. The user speaks or types an intent. The
-> FastAPI backend calls **LLM Call 1** — the Planner Agent generates a
-> structured JSON schedule using Gemini 3.1 Flash-Lite.
->
-> Calendar and Tasks are populated *programmatically* through MCP tools —
-> zero LLM calls. Then **LLM Call 2** — the Coordinator runs a combined
-> safety evaluation and generates a spoken-friendly summary.
->
-> 5 agents. 2 MCP tools. Only 2 LLM calls. Deployed live on
-> **Google Cloud Run**."
+> "The entire system is **voice-first**. Speak your plan — the Web
+> Speech API transcribes it. Summaries are automatically read aloud
+> via text-to-speech. The UI is WCAG 2.1 AA: keyboard-navigable,
+> high-contrast, screen-reader friendly. Accessibility isn't a feature
+> — it's the foundation."
 
 ---
 
-## 🎬 SCENE 6 — Closing (2:45 – 3:00)
+## 🎬 SCENE 6 — Architecture + Close (2:35 – 3:00)
 
-**SCREEN:** Switch back to the app's landing page.
+**SCREEN:** Briefly show the README architecture diagram or a slide.
 
 > **SAY:**
 >
-> "Guidelight AI shows that generative AI can do more than answer
+> "The architecture: **Gemini 2.5 Flash on Vertex AI**, orchestrated by
+> **Google ADK** with 5 agents and 2 MCP tools — Calendar and Task Store.
+> The Calendar tool integrates with **real Google Calendar API** via OAuth2.
+>
+> *(point to diagram)*
+>
+> Only **2 LLM calls** for a full plan. Real-time SSE streaming.
+> Conversational follow-up. Adaptive replanning. Emergency SOS.
+> Safety-first design.
+>
+> Guidelight AI proves that generative AI can do more than answer
 > questions — it can *plan*, *coordinate*, *monitor*, and *protect*.
 >
-> Giving visually impaired users real independence. Not just information.
->
-> Thank you."
+> Real independence. Not just information. Thank you."
 
 ---
 
 ## ⚡ QUICK CHECKLIST BEFORE RECORDING
 
-- [ ] Open https://guidelight-ai-669449334512.us-central1.run.app in Chrome
-- [ ] Full-screen the browser (Cmd+Shift+F or F11)
-- [ ] Clear any previous results (refresh page)
-- [ ] Test microphone works (for voice demo in Scene 4)
-- [ ] Have VS Code or PPT open in background (for Scene 5)
-- [ ] Start QuickTime recording: Cmd+Shift+5 → Record Entire Screen
-- [ ] Speak clearly, slightly slow, with 1-second pauses between scenes
+- [ ] Open http://localhost:8080 in Chrome (full-screen: Cmd+Shift+F)
+- [ ] Refresh page to clear previous results
+- [ ] Test microphone (System Preferences → Sound → Input)
+- [ ] Test speakers (for TTS readout in the video)
+- [ ] Have VS Code open with architecture diagram as backup
+- [ ] **Pre-warm:** Generate one plan before recording to warm up Vertex AI
+- [ ] Start QuickTime: Cmd+Shift+5 → Record Entire Screen
+- [ ] Speak clearly, slightly slow, 1-second pauses between scenes
 
 ## ⏱️ TIMING SUMMARY
 
-| Scene | Time | Duration | What's on Screen |
-|-------|------|----------|-----------------|
-| 1. Hook + Problem | 0:00–0:30 | 30s | Landing page hero + scroll to cards |
-| 2. Live Demo | 0:30–1:00 | 30s | Click Medical Day → Plan → stepper animates |
-| 3a. Schedule Tab | 1:00–1:15 | 15s | Color-coded timeline |
-| 3b. Tasks Tab | 1:15–1:30 | 15s | Checklist + check off tasks |
-| 3c. Safety Tab | 1:30–1:50 | 20s | Safety card with risk alerts |
-| 4. Voice + A11y | 1:50–2:15 | 25s | Mic input → TTS readout |
-| 5. Architecture | 2:15–2:45 | 30s | VS Code/PPT architecture diagram |
-| 6. Closing | 2:45–3:00 | 15s | Back to landing page |
+| Scene | Time | Duration | What's on Screen | Key Buzzwords |
+|-------|------|----------|-----------------|---------------|
+| 1. Hook + Problem | 0:00–0:25 | 25s | Hero + badges + scenario cards | Vertex AI, ADK, MCP, 5 agents |
+| 2. SSE Pipeline | 0:25–1:00 | 35s | Streaming pipeline → metrics + safety banner + GCal sync | 2 LLM calls, SSE, 70% token reduction |
+| 3a. Schedule | 1:00–1:10 | 10s | Color-coded timeline | Google Calendar API, OAuth2 |
+| 3b. Tasks | 1:10–1:25 | 15s | Checklist + progress bar | MCP Task Store, real-time |
+| 3c. Safety | 1:25–1:40 | 15s | Safety card + risk alerts | **Key differentiator**, 5 risk categories |
+| 4a. Chat | 1:40–1:55 | 15s | Conversational follow-up | Context-aware, spoken-friendly |
+| 4b. Replan | 1:55–2:10 | 15s | Replan modal → updated schedule | Adaptive, preserves critical items |
+| 4c. SOS | 2:10–2:20 | 10s | Emergency context modal | Caregiver sharing, medication status |
+| 5. Voice + A11y | 2:20–2:35 | 15s | Mic input → TTS readout | WCAG 2.1 AA, voice-first |
+| 6. Architecture | 2:35–3:00 | 25s | Diagram + closing | Full stack recap, impact statement |
+
+---
+
+## 🏆 JUDGE IMPACT PHRASES TO USE
+
+Use these naturally during the demo — they map to hackathon scoring criteria:
+
+| Criterion | Phrase to Say |
+|-----------|--------------|
+| **Gen AI Usage** | "5 agents orchestrated by Google ADK, powered by Gemini 2.5 Flash on Vertex AI" |
+| **Innovation** | "The only AI planner with a dedicated Safety Agent — it detects risks no scheduler checks for" |
+| **Technical Depth** | "2 LLM calls per plan, MCP tool integration, real Google Calendar OAuth2 sync" |
+| **Impact** | "Real independence for 2.2 billion people with vision impairment" |
+| **Completeness** | "SSE streaming, conversational chat, adaptive replanning, emergency SOS — all working end-to-end" |
+| **Optimization** | "70% token reduction by calling Calendar and Task tools programmatically instead of through the LLM" |
+
+---
+
+## 🎯 BACKUP PLAN
+
+If Vertex AI is slow or errors during live recording:
+1. **Pre-record the pipeline section** separately and splice in
+2. Use the **non-streaming fallback endpoint** (`/daily-intent`) which is more reliable
+3. Have a **pre-generated plan** — navigate to it via `/daily-plan/{plan_id}` in the URL
+4. The app gracefully falls back to in-memory calendar if Google Calendar API has issues

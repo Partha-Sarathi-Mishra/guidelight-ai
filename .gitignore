@@ -31,3 +31,7 @@ Thumbs.db
 .vscode/
 *.swp
 *~
+
+# ── Draft docs (not for public repo) ────────────────────
+DEMO_SCRIPT.md
+MEDIUM_BLOG.md
